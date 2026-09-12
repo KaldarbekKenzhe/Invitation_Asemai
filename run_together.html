@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>run together?</title>
+  <meta name="description" content="Wanna go for a run sometime?" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sand: "#faf8f4",
+            sage: {
+              100: "#e8f0e6",
+              200: "#cfe0cb",
+              300: "#a9c9a3",
+              400: "#7fb078",
+              500: "#5f9457",
+            },
+            clay: {
+              400: "#e6a071",
+              500: "#d98850",
+            },
+            slate: "#3b3a36",
+          },
+          fontFamily: {
+            display: ["'Fraunces'", "serif"],
+            body: ["'Inter'", "sans-serif"],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    html,
+    body {
+      background: linear-gradient(165deg, #faf8f4 0%, #f1f4ee 55%, #eaf0e6 100%);
+    }
+
+    .glow {
+      box-shadow:
+        0 12px 40px -16px rgba(95, 148, 87, 0.28),
+        0 0 70px -34px rgba(127, 176, 120, 0.4);
+    }
+
+    /* Evasion button smooth roam */
+    #noBtn {
+      transition: top 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        left 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: top, left;
+    }
+
+    .screen {
+      display: none;
+    }
+    .screen.active {
+      display: block;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.45s ease both;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body class="font-body text-slate min-h-screen antialiased">
+  <main class="relative z-10 min-h-screen flex items-center justify-center px-4 py-10">
+    <!-- Card -->
+    <div class="w-full max-w-lg glow rounded-3xl bg-white/80 backdrop-blur-md border border-white/90 overflow-hidden">
+      <!-- Header ribbon -->
+      <div class="px-8 pt-8 pb-1 text-center">
+        <div class="inline-flex items-center gap-2 rounded-full bg-sage-100 px-4 py-1.5 text-sm font-medium text-sage-500">
+          🏃 
+        </div>
+      </div>
+
+      <!-- Card body -->
+      <div class="px-8 pb-9 sm:px-10">
+
+        <!-- ============ INTRO SCREEN ============ -->
+        <section id="introScreen" class="screen active text-center">
+          <div class="text-4xl mt-4 mb-4">👋</div>
+          <h1 class="font-display text-3xl sm:text-4xl font-semibold text-slate leading-tight">
+            Salem Assel!
+          </h1>
+          <p class="mt-4 text-slate/70 leading-relaxed">
+            We haven't actually met, but I noticed
+            you are into running. Small random idea, hear me out :)
+          </p>
+          <button
+            id="startBtn"
+            class="mt-7 rounded-full bg-sage-400 hover:bg-sage-500 px-8 py-3.5 font-semibold text-white shadow-lg shadow-sage-200/60 transition-colors"
+          >
+            go on
+          </button>
+        </section>
+
+        <!-- ============ ASK SCREEN ============ -->
+        <section id="askScreen" class="screen text-center">
+          <div class="text-4xl mt-3 mb-3">🏃‍♀️ · ☕</div>
+          <h1 class="font-display text-3xl sm:text-4xl font-semibold text-slate leading-tight">
+            Wanna go for a run sometime?
+          </h1>
+          <p class="mt-4 text-slate/70 leading-relaxed">
+            No pressure at all. Just an easy run and maybe a coffee after 
+            a low key way to actually meet in person.
+          </p>
+
+          <!-- Button field: relative container that gives the No button room to roam -->
+          <div id="btnField" class="relative mt-8 h-44 select-none">
+            <button
+              id="yesBtn"
+              class="absolute left-1/2 -translate-x-1/2 top-3 z-10 rounded-full bg-gradient-to-r from-sage-400 to-clay-400 hover:from-sage-500 hover:to-clay-500 px-9 py-3.5 font-semibold text-white shadow-lg shadow-sage-200/60 transition-colors"
+            >
+              sure, why not
+            </button>
+
+            <button
+              id="noBtn"
+              class="absolute rounded-full border border-sage-200 bg-white/80 px-6 py-3 font-medium text-slate/60 hover:text-slate"
+              style="top: 92px; left: 50%; transform: translateX(-50%);"
+            >
+              nah
+            </button>
+          </div>
+
+          <p id="statusLine" class="text-sm text-sage-500 h-5 mt-1 font-medium"></p>
+        </section>
+
+        <!-- ============ FORM SCREEN ============ -->
+        <section id="formScreen" class="screen text-center">
+          <div class="text-4xl mt-3 mb-3">📅</div>
+          <h1 class="font-display text-2xl sm:text-3xl font-semibold text-slate leading-tight">
+            Nice. Pick a day that works for you.
+          </h1>
+
+          <form id="runForm" class="mt-6 space-y-5 text-left">
+            <div>
+              <label for="runDate" class="block text-sm font-medium text-slate/70 mb-2">
+                Preferred day
+              </label>
+              <input
+                id="runDate"
+                name="date"
+                type="date"
+                required
+                class="w-full rounded-2xl border border-sage-200 bg-white/80 px-4 py-3.5 text-slate outline-none focus:border-sage-400 focus:ring-2 focus:ring-sage-200"
+              />
+            </div>
+
+            <!-- Hidden subject for Formspree -->
+            <input type="hidden" name="_subject" value="New run request" />
+
+            <button
+              id="submitBtn"
+              type="submit"
+              class="w-full rounded-full bg-gradient-to-r from-sage-400 to-clay-400 hover:from-sage-500 hover:to-clay-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-sage-200/60 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              send it
+            </button>
+
+            <p id="formError" class="hidden text-sm text-red-400 text-center"></p>
+          </form>
+        </section>
+
+        <!-- ============ SENT SCREEN ============ -->
+        <section id="sentScreen" class="screen text-center">
+          <div class="text-5xl mt-4 mb-4">🙌</div>
+          <h1 class="font-display text-2xl sm:text-3xl font-semibold text-slate">
+            Sent — see you on the route.
+          </h1>
+          <p class="mt-4 text-slate/70 leading-relaxed">
+            Thanks! I'll drop you a message to sort out the details.
+            Looking forward to it.
+          </p>
+          <p class="mt-6 text-sm text-sage-500 font-medium">
+            take care 🏃
+          </p>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // ------- Config -------
+    const FORMSPREE_ENDPOINT = "https://formspree.io/f/xgawblkz";
+
+    // ------- Screen navigation -------
+    const screens = {
+      intro: document.getElementById("introScreen"),
+      ask: document.getElementById("askScreen"),
+      form: document.getElementById("formScreen"),
+      sent: document.getElementById("sentScreen"),
+    };
+
+    function showScreen(name) {
+      Object.values(screens).forEach((s) => s.classList.remove("active"));
+      const el = screens[name];
+      el.classList.add("active");
+      el.classList.remove("fade-in");
+      void el.offsetWidth; // reflow to restart animation
+      el.classList.add("fade-in");
+    }
+
+    // ------- Intro -> Ask -------
+    document.getElementById("startBtn").addEventListener("click", () => {
+      showScreen("ask");
+    });
+
+    // ------- Ask screen: Yes -------
+    document.getElementById("yesBtn").addEventListener("click", () => {
+      showScreen("form");
+    });
+
+    // ------- Ask screen: "nah" evasion logic -------
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const btnField = document.getElementById("btnField");
+    const statusLine = document.getElementById("statusLine");
+
+    const noMessages = [
+      "wait, really?",
+      "you sure?",
+      "one easy run?",
+      "hmm, reconsider?",
+      "coffee's on me",
+      "can't catch me",
+      "still a no?",
+      "last try…",
+    ];
+
+    const statusMessages = [
+      "the button dodged that one",
+      "it's a little shy",
+      "try again?",
+      "yes is right there 👉",
+      "worth a shot, right?",
+    ];
+
+    let msgIdx = 0;
+    let statusIdx = 0;
+
+    function rectsOverlap(a, b, pad = 10) {
+      return !(
+        a.right + pad < b.left ||
+        a.left - pad > b.right ||
+        a.bottom + pad < b.top ||
+        a.top - pad > b.bottom
+      );
+    }
+
+    function moveNoBtn() {
+      // Once it starts moving, drop the centering transform
+      noBtn.style.transform = "none";
+
+      const field = btnField.getBoundingClientRect();
+      const btn = noBtn.getBoundingClientRect();
+      const yes = yesBtn.getBoundingClientRect();
+
+      const maxLeft = Math.max(0, field.width - btn.width);
+      const maxTop = Math.max(0, field.height - btn.height);
+
+      let newLeft = 0;
+      let newTop = 0;
+
+      for (let attempt = 0; attempt < 12; attempt++) {
+        newLeft = Math.random() * maxLeft;
+        newTop = Math.random() * maxTop;
+
+        const projected = {
+          left: field.left + newLeft,
+          top: field.top + newTop,
+          right: field.left + newLeft + btn.width,
+          bottom: field.top + newTop + btn.height,
+        };
+
+        if (!rectsOverlap(projected, yes)) break;
+      }
+
+      noBtn.style.left = newLeft + "px";
+      noBtn.style.top = newTop + "px";
+
+      // Rotate button text
+      msgIdx = (msgIdx + 1) % noMessages.length;
+      noBtn.textContent = noMessages[msgIdx];
+
+      // Rotate status line
+      statusLine.textContent = statusMessages[statusIdx];
+      statusIdx = (statusIdx + 1) % statusMessages.length;
+    }
+
+    // Desktop hover
+    noBtn.addEventListener("mouseenter", moveNoBtn);
+
+    // Mobile tap — prevent activation, just move
+    noBtn.addEventListener(
+      "touchstart",
+      (e) => {
+        e.preventDefault();
+        moveNoBtn();
+      },
+      { passive: false }
+    );
+
+    // Real click fallback — can never actually submit "no"
+    noBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      moveNoBtn();
+    });
+
+    // ------- Form screen: submit to Formspree -------
+    const runForm = document.getElementById("runForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const formError = document.getElementById("formError");
+
+    runForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      formError.classList.add("hidden");
+      submitBtn.disabled = true;
+      submitBtn.textContent = "sending…";
+
+      try {
+        const response = await fetch(FORMSPREE_ENDPOINT, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: new FormData(runForm),
+        });
+
+        if (response.ok) {
+          showScreen("sent");
+        } else {
+          throw new Error("status " + response.status);
+        }
+      } catch (err) {
+        formError.textContent =
+          "hmm, that didn't send. mind trying again? (" + err.message + ")";
+        formError.classList.remove("hidden");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "send it";
+      }
+    });
+  </script>
+</body>
+</html>
