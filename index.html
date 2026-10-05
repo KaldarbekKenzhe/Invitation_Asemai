@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kk">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>run together?</title>
-  <meta name="description" content="Wanna go for a run sometime?" />
+  <title>алғашқы кездесу? 😼💕</title>
+  <meta name="description" content="Асемайға арналған кішкентай де жылы сайт :)" />
 
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap"
     rel="stylesheet"
   />
 
@@ -34,10 +34,33 @@
               400: "#e6a071",
               500: "#d98850",
             },
+            bubble: {
+              100: "#ffe3ee",
+              200: "#ffc9dd",
+              400: "#ff7fac",
+              500: "#ff5b96",
+            },
+            lav: {
+              100: "#f1eaff",
+              200: "#dfccff",
+              400: "#b78cff",
+              500: "#9a5cff",
+            },
+            rose: {
+              100: "#ffe0ea",
+              200: "#ffc2d6",
+              400: "#e8457a",
+              500: "#d1285f",
+            },
+            gold: {
+              300: "#ffd98a",
+              400: "#f5b942",
+              500: "#e2a227",
+            },
             slate: "#3b3a36",
           },
           fontFamily: {
-            display: ["'Fraunces'", "serif"],
+            display: ["'Baloo 2'", "'Fraunces'", "serif"],
             body: ["'Inter'", "sans-serif"],
           },
         },
@@ -48,13 +71,22 @@
   <style>
     html,
     body {
-      background: linear-gradient(165deg, #faf8f4 0%, #f1f4ee 55%, #eaf0e6 100%);
+      background: linear-gradient(160deg, #fff1f5 0%, #ffe0ec 35%, #ffd9e8 60%, #f3e3ff 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(60% 50% at 50% 0%, rgba(245, 185, 66, 0.16), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
     }
 
     .glow {
       box-shadow:
-        0 12px 40px -16px rgba(95, 148, 87, 0.28),
-        0 0 70px -34px rgba(127, 176, 120, 0.4);
+        0 12px 40px -16px rgba(209, 40, 95, 0.3),
+        0 0 70px -30px rgba(245, 185, 66, 0.35);
     }
 
     /* Evasion button smooth roam */
@@ -84,17 +116,118 @@
         transform: translateY(0);
       }
     }
+
+    /* Floating cat pics in the background, different set per screen */
+    #catLayer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    #catLayer img {
+      position: absolute;
+      border-radius: 1.1rem;
+      object-fit: cover;
+      opacity: 0.8;
+      box-shadow: 0 14px 30px -12px rgba(59, 58, 54, 0.35);
+      animation: floatCat 5.5s ease-in-out infinite;
+    }
+    @keyframes floatCat {
+      0%,
+      100% {
+        transform: translateY(0) rotate(var(--rot, 0deg));
+      }
+      50% {
+        transform: translateY(-16px) rotate(var(--rot, 0deg));
+      }
+    }
+
+    /* Emoji confetti burst */
+    .emoji-pop {
+      position: fixed;
+      top: -8%;
+      font-size: 28px;
+      z-index: 50;
+      pointer-events: none;
+      animation-name: emojiFall;
+      animation-timing-function: linear;
+      animation-fill-mode: forwards;
+    }
+    @keyframes emojiFall {
+      to {
+        transform: translateY(115vh) rotate(360deg);
+        opacity: 0.15;
+      }
+    }
+
+    /* Little cat that strolls across the page, dropping hearts behind it */
+    .walking-cat {
+      position: fixed;
+      font-size: 34px;
+      z-index: 40;
+      pointer-events: none;
+      animation: catWalk 9s linear forwards;
+    }
+    .walking-cat.reverse {
+      animation-name: catWalkReverse;
+    }
+    @keyframes catWalk {
+      from {
+        left: -10%;
+        transform: scaleX(1);
+      }
+      to {
+        left: 110%;
+        transform: scaleX(1);
+      }
+    }
+    @keyframes catWalkReverse {
+      from {
+        left: 110%;
+        transform: scaleX(-1);
+      }
+      to {
+        left: -10%;
+        transform: scaleX(-1);
+      }
+    }
+    .heart-trail {
+      position: fixed;
+      z-index: 39;
+      font-size: 16px;
+      pointer-events: none;
+      animation: heartTrail 1.4s ease-out forwards;
+    }
+    @keyframes heartTrail {
+      to {
+        transform: translateY(-40px) scale(1.3);
+        opacity: 0;
+      }
+    }
+
+    /* Cats that run in close from the edges to shower the card with love */
+    .converging-cat {
+      position: fixed;
+      font-size: 30px;
+      z-index: 45;
+      pointer-events: none;
+      transition: left 1.4s ease, top 1.4s ease, opacity 1.4s ease 0.3s;
+    }
   </style>
 </head>
 
 <body class="font-body text-slate min-h-screen antialiased">
+  <!-- Funny cat pics floating behind the card, redrawn for every screen -->
+  <div id="catLayer" aria-hidden="true"></div>
+
   <main class="relative z-10 min-h-screen flex items-center justify-center px-4 py-10">
     <!-- Card -->
     <div class="w-full max-w-lg glow rounded-3xl bg-white/80 backdrop-blur-md border border-white/90 overflow-hidden">
       <!-- Header ribbon -->
       <div class="px-8 pt-8 pb-1 text-center">
-        <div class="inline-flex items-center gap-2 rounded-full bg-sage-100 px-4 py-1.5 text-sm font-medium text-sage-500">
-          🏃 
+        <div class="inline-flex items-center gap-2 rounded-full bg-rose-100 px-4 py-1.5 text-sm font-medium text-rose-500">
+          🐾 құпия жоба
         </div>
       </div>
 
@@ -105,82 +238,138 @@
         <section id="introScreen" class="screen active text-center">
           <div class="text-4xl mt-4 mb-4">👋</div>
           <h1 class="font-display text-3xl sm:text-4xl font-semibold text-slate leading-tight">
-            Salem Assel!
+            Сәлем, Асемай! 🐾
           </h1>
           <p class="mt-4 text-slate/70 leading-relaxed">
-            We haven't actually met, but I noticed
-            you are into running. Small random idea, hear me out :)
+            Біз әлі бетпе-бет танысып үлгермедік, бірақ саған
+            айтқым келген кішкентай сұрағым бар. Тыңдашы 🙂💗
           </p>
+          <p class="mt-4 text-xs text-slate/40 italic">
+            (қалыпты адамдар жай ғана сообщение жазады ғой, ал мен
+            тұтас сайт жасап тастадым 😅🐱)
+          </p>
+          <img
+            src="https://cataas.com/cat/cute/gif?width=160&height=160&fit=cover"
+            alt="мысықша GIF"
+            loading="lazy"
+            class="mx-auto mt-4 h-28 w-28 rounded-2xl object-cover shadow-lg shadow-rose-200/60"
+            onerror="this.remove()"
+          />
           <button
             id="startBtn"
-            class="mt-7 rounded-full bg-sage-400 hover:bg-sage-500 px-8 py-3.5 font-semibold text-white shadow-lg shadow-sage-200/60 transition-colors"
+            class="mt-7 rounded-full bg-gradient-to-r from-rose-400 to-bubble-500 hover:from-rose-500 hover:to-bubble-500 px-8 py-3.5 font-semibold text-white shadow-lg shadow-rose-200/60 transition-colors"
           >
-            go on
+            Жалғастыру 🐾
           </button>
         </section>
 
         <!-- ============ ASK SCREEN ============ -->
         <section id="askScreen" class="screen text-center">
-          <div class="text-4xl mt-3 mb-3">🏃‍♀️ · ☕</div>
+          <div class="text-4xl mt-3 mb-3">💌 · 😻</div>
           <h1 class="font-display text-3xl sm:text-4xl font-semibold text-slate leading-tight">
-            Wanna go for a run sometime?
+            Алғашқы кездесуіміз қашан болады және менімен кездесуге барасың ба?
+            💕
           </h1>
           <p class="mt-4 text-slate/70 leading-relaxed">
-            No pressure at all. Just an easy run and maybe a coffee after 
-            a low key way to actually meet in person.
+            Қысым жоқ, уәде беремін 🙊 Тек сен, мен және дәмді тағам немесе табиғат —
+            бетпе-бет танысуға тамаша сылтау. Қауіпсіздігіңізге өзім басыммен жауап беремін 😍
           </p>
 
           <!-- Button field: relative container that gives the No button room to roam -->
-          <div id="btnField" class="relative mt-8 h-44 select-none">
+          <div id="btnField" class="relative mt-8 h-48 select-none">
             <button
               id="yesBtn"
-              class="absolute left-1/2 -translate-x-1/2 top-3 z-10 rounded-full bg-gradient-to-r from-sage-400 to-clay-400 hover:from-sage-500 hover:to-clay-500 px-9 py-3.5 font-semibold text-white shadow-lg shadow-sage-200/60 transition-colors"
+              class="absolute left-1/2 -translate-x-1/2 top-3 z-10 rounded-full bg-gradient-to-r from-rose-400 to-bubble-500 hover:from-rose-500 hover:to-bubble-500 px-9 py-3.5 font-semibold text-white shadow-lg shadow-rose-200/60 transition-colors"
             >
-              sure, why not
+              Иә, әрине 😍💖
             </button>
 
             <button
               id="noBtn"
-              class="absolute rounded-full border border-sage-200 bg-white/80 px-6 py-3 font-medium text-slate/60 hover:text-slate"
+              class="absolute rounded-full border border-rose-200 bg-white/80 px-6 py-3 font-medium text-slate/60 hover:text-slate"
               style="top: 92px; left: 50%; transform: translateX(-50%);"
             >
-              nah
+              Жоқ
             </button>
           </div>
 
-          <p id="statusLine" class="text-sm text-sage-500 h-5 mt-1 font-medium"></p>
+          <p id="statusLine" class="text-sm text-rose-500 h-5 mt-1 font-medium"></p>
+        </section>
+
+        <!-- ============ CELEBRATE SCREEN ============ -->
+        <section id="celebrateScreen" class="screen text-center">
+          <div class="text-5xl mt-4 mb-4">🥳</div>
+          <h1 class="font-display text-3xl sm:text-4xl font-semibold text-slate leading-tight">
+            Тоқта... сен шынымен ИӘ дедің бе?! 😳💘
+          </h1>
+          <p class="mt-4 text-slate/70 leading-relaxed">
+            Бұл әзіл емес еді — мен шынымен-ақ жауап күтіп, сенбей қалғанмын. Бірақ сен ИӘ дедің! Мен өте қуаныштымын! 🥰
+            😭💕 
+          </p>
+          <img
+            src="https://cataas.com/cat/love/gif?width=180&height=180&fit=cover"
+            alt="қуанышты мысықша GIF"
+            loading="lazy"
+            class="mx-auto mt-4 h-32 w-32 rounded-2xl object-cover shadow-lg shadow-rose-200/60"
+            onerror="this.remove()"
+          />
+          <button
+            id="continueBtn"
+            class="mt-7 rounded-full bg-gradient-to-r from-lav-400 to-rose-400 hover:from-lav-500 hover:to-rose-500 px-8 py-3.5 font-semibold text-white shadow-lg shadow-rose-200/60 transition-colors"
+          >
+            Күнді таңдауға өтейік → 🐈
+          </button>
         </section>
 
         <!-- ============ FORM SCREEN ============ -->
         <section id="formScreen" class="screen text-center">
-          <div class="text-4xl mt-3 mb-3">📅</div>
+          <div class="text-4xl mt-3 mb-3">📅 · 😻</div>
           <h1 class="font-display text-2xl sm:text-3xl font-semibold text-slate leading-tight">
-            Nice. Pick a day that works for you.
+            Керемет! Күн мен уақытты таңда 🐾
           </h1>
+          <p class="mt-3 text-sm text-slate/60">
+            Күнді таңдайсың ғой — қалғанын мен
+            ойластырамын 😉💗
+          </p>
 
           <form id="runForm" class="mt-6 space-y-5 text-left">
             <div>
               <label for="runDate" class="block text-sm font-medium text-slate/70 mb-2">
-                Preferred day
+                🐾 Күн
               </label>
               <input
                 id="runDate"
                 name="date"
                 type="date"
                 required
-                class="w-full rounded-2xl border border-sage-200 bg-white/80 px-4 py-3.5 text-slate outline-none focus:border-sage-400 focus:ring-2 focus:ring-sage-200"
+                min="2026-10-21"
+                max="2026-10-25"
+                class="w-full rounded-2xl border border-rose-200 bg-white/80 px-4 py-3.5 text-slate outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-200"
+              />
+            </div>
+
+            <div>
+              <label for="runTime" class="block text-sm font-medium text-slate/70 mb-2">
+                💕 Уақыты
+              </label>
+              <input
+                id="runTime"
+                name="time"
+                type="time"
+                required
+                class="w-full rounded-2xl border border-rose-200 bg-white/80 px-4 py-3.5 text-slate outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-200"
               />
             </div>
 
             <!-- Hidden subject for Formspree -->
-            <input type="hidden" name="_subject" value="New run request" />
+            <input type="hidden" name="_subject" value="Алғашқы кездесуге өтінім 💌" />
 
             <button
               id="submitBtn"
               type="submit"
-              class="w-full rounded-full bg-gradient-to-r from-sage-400 to-clay-400 hover:from-sage-500 hover:to-clay-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-sage-200/60 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+              class="w-full rounded-full bg-gradient-to-r from-rose-400 to-bubble-500 hover:from-rose-500 hover:to-bubble-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-rose-200/60 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              send it
+              Жіберу 💌
             </button>
 
             <p id="formError" class="hidden text-sm text-red-400 text-center"></p>
@@ -189,16 +378,22 @@
 
         <!-- ============ SENT SCREEN ============ -->
         <section id="sentScreen" class="screen text-center">
-          <div class="text-5xl mt-4 mb-4">🙌</div>
+          <div class="text-5xl mt-4 mb-4">🚗💨</div>
           <h1 class="font-display text-2xl sm:text-3xl font-semibold text-slate">
-            Sent — see you on the route.
+            Жоқ демегеніңе қуаныштымын 😍💕
           </h1>
-          <p class="mt-4 text-slate/70 leading-relaxed">
-            Thanks! I'll drop you a message to sort out the details.
-            Looking forward to it.
+          <p id="sentDetails" class="mt-4 text-slate/70 leading-relaxed">
+            Таңдаған уақытыңа дайын бол — өзім келіп алып кетемін.
           </p>
-          <p class="mt-6 text-sm text-sage-500 font-medium">
-            take care 🏃
+          <img
+            src="https://cataas.com/cat/cute/gif?width=160&height=160&fit=cover"
+            alt="қоштасу мысықшасы GIF"
+            loading="lazy"
+            class="mx-auto mt-4 h-28 w-28 rounded-2xl object-cover shadow-lg shadow-rose-200/60"
+            onerror="this.remove()"
+          />
+          <p class="mt-6 text-sm text-rose-500 font-medium">
+            кездескенше💕😻✨
           </p>
         </section>
 
@@ -208,23 +403,155 @@
 
   <script>
     // ------- Config -------
+    // NB: this is my own Formspree form — nothing fancy, just so the
+    // submission lands in my inbox instead of nowhere.
     const FORMSPREE_ENDPOINT = "https://formspree.io/f/xgawblkz";
 
     // ------- Screen navigation -------
     const screens = {
       intro: document.getElementById("introScreen"),
       ask: document.getElementById("askScreen"),
+      celebrate: document.getElementById("celebrateScreen"),
       form: document.getElementById("formScreen"),
       sent: document.getElementById("sentScreen"),
     };
 
     function showScreen(name) {
+      if (name !== "celebrate") stopCelebration();
+
       Object.values(screens).forEach((s) => s.classList.remove("active"));
       const el = screens[name];
       el.classList.add("active");
       el.classList.remove("fade-in");
       void el.offsetWidth; // reflow to restart animation
       el.classList.add("fade-in");
+
+      renderCats(name);
+
+      if (name === "celebrate") startCelebration();
+    }
+
+    // ------- Funny cat pics (and gifs!), redrawn for every screen -------
+    const catLayer = document.getElementById("catLayer");
+    const CAT_TAGS = ["cute", "kitten", "funny", "sleepy", "love", "smile"];
+    const CAT_COUNT = 9;
+    const CAT_GIF_CHANCE = 0.45;
+
+    function randomCatUrl(tagSeed) {
+      const tag = CAT_TAGS[Math.floor(Math.random() * CAT_TAGS.length)];
+      const size = 100 + Math.floor(Math.random() * 50);
+      const unique = Math.random().toString(36).slice(2);
+      const gifPart = Math.random() < CAT_GIF_CHANCE ? "/gif" : "";
+      return `https://cataas.com/cat/${tag}${gifPart}?width=${size}&height=${size}&fit=cover&r=${tagSeed}_${unique}`;
+    }
+
+    function renderCats(screenName) {
+      catLayer.innerHTML = "";
+      for (let i = 0; i < CAT_COUNT; i++) {
+        const img = document.createElement("img");
+        img.src = randomCatUrl(screenName + i);
+        img.alt = "күлкілі мысық";
+        img.loading = "lazy";
+        img.decoding = "async";
+        img.style.top = Math.random() * 82 + "%";
+        img.style.left = Math.random() * 86 + "%";
+        img.style.setProperty("--rot", (Math.random() * 24 - 12).toFixed(1) + "deg");
+        img.style.animationDelay = (Math.random() * 3).toFixed(2) + "s";
+        img.onerror = () => img.remove();
+        catLayer.appendChild(img);
+      }
+    }
+
+    // ------- Emoji confetti burst for the celebration screen -------
+    const CELEBRATION_EMOJIS = ["🎉", "🥳", "😻", "💖", "✨", "😍", "💃", "🐱", "🎊", "💕"];
+    let celebrateInterval = null;
+
+    function spawnEmoji() {
+      const span = document.createElement("span");
+      span.className = "emoji-pop";
+      span.textContent =
+        CELEBRATION_EMOJIS[Math.floor(Math.random() * CELEBRATION_EMOJIS.length)];
+      span.style.left = Math.random() * 100 + "vw";
+      const duration = 3 + Math.random() * 2;
+      span.style.animationDuration = duration + "s";
+      document.body.appendChild(span);
+      setTimeout(() => span.remove(), duration * 1000 + 100);
+    }
+
+    function startCelebration() {
+      spawnEmoji();
+      celebrateInterval = setInterval(spawnEmoji, 140);
+      setTimeout(stopCelebration, 3200);
+      catsConverge();
+    }
+
+    function stopCelebration() {
+      if (celebrateInterval) {
+        clearInterval(celebrateInterval);
+        celebrateInterval = null;
+      }
+    }
+
+    // ------- A little cat strolls across the page, dropping hearts -------
+    const WALK_EMOJIS = ["🐱", "😻", "🐈"];
+    const TRAIL_EMOJIS = ["💕", "💖", "✨"];
+
+    function sendWalkingCat() {
+      const cat = document.createElement("div");
+      const reverse = Math.random() < 0.5;
+      cat.className = "walking-cat" + (reverse ? " reverse" : "");
+      cat.textContent = WALK_EMOJIS[Math.floor(Math.random() * WALK_EMOJIS.length)];
+      cat.style.bottom = 10 + Math.random() * 60 + "px";
+      document.body.appendChild(cat);
+
+      const trailTimer = setInterval(() => {
+        const rect = cat.getBoundingClientRect();
+        const heart = document.createElement("span");
+        heart.className = "heart-trail";
+        heart.textContent =
+          TRAIL_EMOJIS[Math.floor(Math.random() * TRAIL_EMOJIS.length)];
+        heart.style.left = rect.left + rect.width / 2 + "px";
+        heart.style.top = rect.top + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 1500);
+      }, 450);
+
+      setTimeout(() => {
+        clearInterval(trailTimer);
+        cat.remove();
+      }, 9200);
+    }
+
+    // ------- Cats run in from the edges to shower the card with love -------
+    function catsConverge() {
+      const card = document.querySelector(".glow");
+      if (!card) return;
+      const cardRect = card.getBoundingClientRect();
+      const centerX = cardRect.left + cardRect.width / 2;
+      const centerY = cardRect.top + cardRect.height / 2;
+      const CONVERGE_EMOJIS = ["😻", "🐱", "💞"];
+
+      for (let i = 0; i < 4; i++) {
+        const cat = document.createElement("div");
+        cat.className = "converging-cat";
+        cat.textContent = CONVERGE_EMOJIS[i % CONVERGE_EMOJIS.length];
+        const angle = Math.random() * Math.PI * 2;
+        const dist = 260 + Math.random() * 80;
+        cat.style.left = centerX + Math.cos(angle) * dist + "px";
+        cat.style.top = centerY + Math.sin(angle) * dist + "px";
+        cat.style.opacity = "1";
+        document.body.appendChild(cat);
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            cat.style.left = centerX + "px";
+            cat.style.top = centerY + "px";
+            cat.style.opacity = "0";
+          });
+        });
+
+        setTimeout(() => cat.remove(), 1800);
+      }
     }
 
     // ------- Intro -> Ask -------
@@ -234,32 +561,37 @@
 
     // ------- Ask screen: Yes -------
     document.getElementById("yesBtn").addEventListener("click", () => {
+      showScreen("celebrate");
+    });
+
+    // ------- Celebrate screen: continue to the form -------
+    document.getElementById("continueBtn").addEventListener("click", () => {
       showScreen("form");
     });
 
-    // ------- Ask screen: "nah" evasion logic -------
+    // ------- Ask screen: "no" evasion logic -------
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
     const btnField = document.getElementById("btnField");
     const statusLine = document.getElementById("statusLine");
 
     const noMessages = [
-      "wait, really?",
-      "you sure?",
-      "one easy run?",
-      "hmm, reconsider?",
-      "coffee's on me",
-      "can't catch me",
-      "still a no?",
-      "last try…",
+      "ойланып көрсеңші?",
+      "анық па?",
+      "өтінемін ғой?",
+      "мүмкіндік берші)",
+      "кофе менен 🍰",
+      "ұстай алмайсың 🐾",
+      "әлі де жоқ па?",
+      "соңғы мүмкіндік…",
     ];
 
     const statusMessages = [
-      "the button dodged that one",
-      "it's a little shy",
-      "try again?",
-      "yes is right there 👉",
-      "worth a shot, right?",
+      "батырма жалтарып кетті 🐾",
+      "ол аздап ұялшақ",
+      "тағы көресің бе?",
+      "міне, анау жерде 👉",
+      "ал, келісесің бе? 💕",
     ];
 
     let msgIdx = 0;
@@ -337,12 +669,33 @@
     const runForm = document.getElementById("runForm");
     const submitBtn = document.getElementById("submitBtn");
     const formError = document.getElementById("formError");
+    const sentDetails = document.getElementById("sentDetails");
+
+    const KK_MONTHS = [
+      "қаңтар", "ақпан", "наурыз", "сәуір", "мамыр", "маусым",
+      "шілде", "тамыз", "қыркүйек", "қазан", "қараша", "желтоқсан",
+    ];
+
+    function formatKkDate(dateStr) {
+      const [, m, d] = dateStr.split("-").map(Number);
+      return `${d} ${KK_MONTHS[m - 1]}`;
+    }
 
     runForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       formError.classList.add("hidden");
+
+      const dateValue = document.getElementById("runDate").value;
+      const timeValue = document.getElementById("runTime").value;
+
+      if (dateValue < "2026-10-21" || dateValue > "2026-10-25") {
+        formError.textContent = "Өтінемін, 21-25 қазан аралығынан күн таңда 🙃🐾";
+        formError.classList.remove("hidden");
+        return;
+      }
+
       submitBtn.disabled = true;
-      submitBtn.textContent = "sending…";
+      submitBtn.textContent = "жіберілуде… 🐾";
 
       try {
         const response = await fetch(FORMSPREE_ENDPOINT, {
@@ -352,18 +705,26 @@
         });
 
         if (response.ok) {
+          sentDetails.textContent =
+            `Таңдаған уақытыңа дайын бол — ${formatKkDate(dateValue)}, сағат ${timeValue} — ` +
+            "өзім келіп сені алып кетемін. Бас тарту жоқ 😎🚗💨";
           showScreen("sent");
         } else {
           throw new Error("status " + response.status);
         }
       } catch (err) {
         formError.textContent =
-          "hmm, that didn't send. mind trying again? (" + err.message + ")";
+          "хм, жіберілмей қалды. тағы байқап көресің бе? (" + err.message + ")";
         formError.classList.remove("hidden");
         submitBtn.disabled = false;
-        submitBtn.textContent = "send it";
+        submitBtn.textContent = "Жіберу 💌";
       }
     });
+
+    // ------- Kick things off -------
+    renderCats("intro");
+    sendWalkingCat();
+    setInterval(sendWalkingCat, 7000);
   </script>
 </body>
 </html>
